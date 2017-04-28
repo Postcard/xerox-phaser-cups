@@ -1,0 +1,54 @@
+# Base image
+FROM resin/%%RESIN_MACHINE_NAME%%-node:6
+
+MAINTAINER Benoit Guigal <benoit@figure.co>
+
+ENV DEVICE_TYPE=%%RESIN_MACHINE_NAME%%
+
+# Make sure installation is not asking for prompt
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update && apt-get install -y \
+    python \
+    python-dev \
+    python-setuptools \
+    python-pip \
+    imagemagick \
+    mlocate \
+    libjpeg-dev \
+    libgif-dev \
+    cups \
+    libcups2-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+
+RUN mkdir -p /usr/share/fonts/opentype
+COPY fonts/*.otf /usr/share/fonts/opentype/
+RUN fc-cache -f -v \
+    && updatedb && \
+	wget http://www.imagemagick.org/Usage/scripts/imagick_type_gen && \
+	perl imagick_type_gen > type.xml && \
+	cp type.xml /etc/ImageMagick-6/type.xml
+
+
+RUN mkdir -p /usr/src/app/
+WORKDIR /usr/src/app/
+
+COPY requirements.txt ./
+RUN pip install -r requirements.txt
+
+COPY package.json ./
+RUN JOBS=MAX npm install --unsafe-perm --production && npm cache clean
+
+COPY .babelrc ./
+
+COPY borne_poster_xerox ./borne_poster_xerox
+COPY wsgi.py ./wsgi.py
+
+RUN mkdir -p ./borne_poster_xerox/static/javascript/ && npm run build
+
+CMD ["gunicorn", "--bind", "0.0.0.0:80", "wsgi:app"]
+
+
+
