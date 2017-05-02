@@ -57,7 +57,7 @@ RUN mkdir -p ./borne_poster_xerox/static/javascript/ && npm run build
 
 COPY ./cupsd.conf /etc/cups/
 
-CMD ["gunicorn", "--bind", "0.0.0.0:80", "wsgi:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "wsgi:app"]
 
 
 
