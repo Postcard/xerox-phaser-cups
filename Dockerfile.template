@@ -36,8 +36,6 @@ RUN fc-cache -f -v \
 	cp type.xml /etc/ImageMagick-6/type.xml
 
 
-COPY ./cupsd.conf /etc/cups/
-
 # create an admin user for cups
 RUN useradd -ms /bin/bash cups_admin && echo 'cups_admin:cups' | chpasswd && usermod -a -G lpadmin cups_admin
 
@@ -57,7 +55,9 @@ COPY wsgi.py ./wsgi.py
 
 RUN mkdir -p ./borne_poster_xerox/static/javascript/ && npm run build
 
-CMD ["gunicorn", "--bind", "0.0.0.0:80", "wsgi:app"]
+COPY ./cupsd.conf /etc/cups/
+
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "wsgi:app"]
 
 
 
