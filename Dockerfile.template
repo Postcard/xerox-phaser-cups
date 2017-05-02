@@ -31,6 +31,7 @@ RUN fc-cache -f -v \
 	perl imagick_type_gen > type.xml && \
 	cp type.xml /etc/ImageMagick-6/type.xml
 
+COPY ./cupsd.conf /etc/cups/
 
 RUN mkdir -p /usr/src/app/
 WORKDIR /usr/src/app/
@@ -48,7 +49,10 @@ COPY wsgi.py ./wsgi.py
 
 RUN mkdir -p ./borne_poster_xerox/static/javascript/ && npm run build
 
-CMD ["gunicorn", "--bind", "0.0.0.0:80", "wsgi:app"]
+COPY ./start.sh ./
+
+#CMD ["gunicorn", "--bind", "0.0.0.0:80", "wsgi:app"]
+CMD ["/bin/bash", "./start.sh"]
 
 
 
