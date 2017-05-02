@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libgif-dev \
     cups \
+    avahi-daemon \
     libcups2-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
