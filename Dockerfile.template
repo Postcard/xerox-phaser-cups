@@ -18,13 +18,17 @@ RUN apt-get update && apt-get install -yq \
     libjpeg-dev \
     libgif-dev \
     cups \
+    cups-filters \
+    printer-driver-gutenprint \
     libcups2-dev \
     avahi-daemon \
     avahi-utils \
     libnss-mdns \
+    curl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && systemctl enable avahi-daemon
+
 
 
 RUN mkdir -p /usr/share/fonts/opentype
@@ -56,8 +60,8 @@ COPY wsgi.py ./wsgi.py
 RUN mkdir -p ./borne_poster_xerox/static/javascript/ && npm run build
 
 COPY ./cupsd.conf /etc/cups/
-COPY ./rastertogutenprint.5.2 /usr/lib/cups/filter/
-COPY ./Xerox_Phaser_7100N.ppd /usr/share/ppd/
+#COPY ./rastertogutenprint.5.2 /usr/lib/cups/filter/
+#COPY ./Xerox_Phaser_7100N.ppd /usr/share/ppd/
 
 
 CMD ["gunicorn", "--bind", "0.0.0.0:8080", "wsgi:app"]
