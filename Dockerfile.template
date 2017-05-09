@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -yq \
     cups \
     libcups2-dev \
     cups-filters \
+    libgutenprint2 \
     printer-driver-gutenprint \
     avahi-daemon \
     avahi-utils \
@@ -58,8 +59,9 @@ COPY wsgi.py ./wsgi.py
 RUN mkdir -p ./borne_poster_xerox/static/javascript/ && npm run build
 
 COPY ./cupsd.conf /etc/cups/
-#COPY ./rastertogutenprint.5.2 /usr/lib/cups/filter/
-#COPY ./Xerox_Phaser_7100N.ppd /usr/share/ppd/
+COPY ./Xerox_Phaser_7100N.ppd /usr/share/ppd/
 
+COPY start.sh ./
+RUN chmod +x start.sh
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "wsgi:app"]
+CMD ["/bin/bash", "start.sh"]
