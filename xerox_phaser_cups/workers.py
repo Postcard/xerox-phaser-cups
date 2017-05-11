@@ -11,6 +11,7 @@ import boto3
 import settings
 
 logger = logging.getLogger(__name__)
+logging.getLogger('boto3').setLevel(logging.CRITICAL)
 
 
 class StoppableThreadMixin(object):
@@ -44,7 +45,7 @@ class CUPSWorker(StoppableThreadMixin, threading.Thread):
         super(CUPSWorker, self).__init__(*args, **kwargs)
         sqs_resource = get_sqs_resource()
         self.queue = sqs_resource.get_queue_by_name(QueueName=queue_name)
-        
+
     def _print(self, url):
         conn = cups.Connection()
         printers = conn.getPrinters()
@@ -58,7 +59,7 @@ class CUPSWorker(StoppableThreadMixin, threading.Thread):
             conn.printFile(settings.PRINTER_NAME, temp.name, 'poster')
 
     def handle_print_job(self, print_job):
-        pdf_url = print_job.get('pdf_file')
+        pdf_url = print_job.get('file_url')
         self._print(pdf_url)
 
     def run(self):
