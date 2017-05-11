@@ -17,7 +17,7 @@ def get_env_setting(setting, default=None):
         raise ImproperlyConfigured(error_msg)
 
 
-RESIN_UUID = get_env_setting('RESIN_UUID')
+RESIN_UUID = get_env_setting('RESIN_DEVICE_UUID')
 
 PRINTER_NAME = get_env_setting('PRINTER_NAME')
 
