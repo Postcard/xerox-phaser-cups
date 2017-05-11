@@ -56,7 +56,7 @@ class CUPSWorker(StoppableThreadMixin, threading.Thread):
         with tempfile.NamedTemporaryFile() as temp:
             temp.write(response.read())
             temp.flush()
-            conn.printFile(settings.PRINTER_NAME, temp.name, 'poster')
+            conn.printFile(settings.PRINTER_NAME, temp.name, 'poster', {})
 
     def handle_print_job(self, print_job):
         pdf_url = print_job.get('file_url')
