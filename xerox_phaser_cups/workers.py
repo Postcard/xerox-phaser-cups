@@ -38,7 +38,7 @@ def get_sqs_resource():
         aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
 
 
-class CUPSWorker(StoppableThreadMixin, StoppableThreadMixin):
+class CUPSWorker(StoppableThreadMixin, threading.Thread):
 
     def __init__(self, queue_name):
         sqs_resource = get_sqs_resource()
