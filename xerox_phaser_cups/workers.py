@@ -3,7 +3,7 @@ import logging
 import time
 import json
 import tempfile
-from urllib.request import urlopen
+from urllib2 import urlopen
 
 import cups
 import boto3

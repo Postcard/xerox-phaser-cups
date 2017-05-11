@@ -1,5 +1,5 @@
 # Base image
-FROM resin/%%RESIN_MACHINE_NAME%%-python:3.6
+FROM resin/%%RESIN_MACHINE_NAME%%-python:2.7
 
 MAINTAINER Benoit Guigal <benoit@figure.co>
 
