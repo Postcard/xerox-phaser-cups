@@ -40,10 +40,11 @@ def get_sqs_resource():
 
 class CUPSWorker(StoppableThreadMixin, threading.Thread):
 
-    def __init__(self, queue_name):
+    def __init__(self, queue_name, *args, **kwargs):
+        super(CUPSWorker, self).__init__(*args, **kwargs)
         sqs_resource = get_sqs_resource()
         self.queue = sqs_resource.get_queue_by_name(QueueName=queue_name)
-
+        
     def _print(self, url):
         conn = cups.Connection()
         printers = conn.getPrinters()
@@ -70,6 +71,7 @@ class CUPSWorker(StoppableThreadMixin, threading.Thread):
                     for message in self.queue.receive_messages(MaxNumberOfMessages=10):
                         print_job = json.loads(message.body)
                         self.handle_print_job(print_job)
+                        message.delete()
                 except Exception as e:
                     logger.exception(e.message)
             time.sleep(0.5)
