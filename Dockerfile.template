@@ -36,7 +36,7 @@ WORKDIR /usr/src/app/
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
-COPY xerox_phaser_cups /usr/src/app
+COPY xerox_phaser_cups /usr/src/app/xerox_phaser_cups
 
 COPY start.sh ./
 RUN chmod +x start.sh
