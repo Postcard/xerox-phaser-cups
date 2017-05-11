@@ -42,7 +42,7 @@ class CUPSWorker(StoppableThreadMixin, threading.Thread):
 
     def __init__(self, queue_name):
         sqs_resource = get_sqs_resource()
-        self.queue = sqs_resource.get_queue_by_name(queue_name)
+        self.queue = sqs_resource.get_queue_by_name(QueueName=queue_name)
 
     def _print(self, url):
         conn = cups.Connection()
@@ -54,7 +54,7 @@ class CUPSWorker(StoppableThreadMixin, threading.Thread):
         with tempfile.NamedTemporaryFile() as temp:
             temp.write(response.read())
             temp.flush()
-            conn.printFile(XEROX_7100N, temp.name, 'poster')
+            conn.printFile(settings.PRINTER_NAME, temp.name, 'poster')
 
     def handle_print_job(self, print_job):
         pdf_url = print_job.get('pdf_file')
