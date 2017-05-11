@@ -93,7 +93,7 @@
 *PageRegion Monarch/Monarch Envelope:	"<</PageSize[279 540]/ImagingBBox null>>setpagedevice"
 *CloseUI: *PageRegion
 
-*DefaultImageableArea: Letter
+*DefaultImageableArea: A3
 *StpDefaultImageableArea: Letter
 *ImageableArea Letter/Letter:	"18 12 594 780"
 *ImageableArea Legal/Legal:	"18 12 594 996"
@@ -114,7 +114,7 @@
 *ImageableArea COM10/Commercial 10:	"18 12 279 672"
 *ImageableArea Monarch/Monarch Envelope:	"18 12 261 528"
 
-*DefaultPaperDimension: Letter
+*DefaultPaperDimension: A3
 *StpDefaultPaperDimension: Letter
 *PaperDimension Letter/Letter:	"612 792"
 *PaperDimension Legal/Legal:	"612 1008"
@@ -179,7 +179,7 @@
 *OPOptionHints Quality: "radiobuttons"
 *OrderDependency: 10 AnySetup *StpQuality
 *StpStpQuality: 0 1 0 0 255 0.000 0.000 0.000
-*DefaultStpQuality: Standard
+*DefaultStpQuality: High
 *StpDefaultStpQuality: Standard
 *StpQuality None/Manual Control:	"<</HWResolution[300 300]/cupsRowFeed 1>>setpagedevice"
 *StpQuality Draft/Draft:	"<</HWResolution[150 150]/cupsRowFeed 2>>setpagedevice"
@@ -310,7 +310,7 @@
 *OrderDependency: 10 AnySetup *StpContrast
 *OPOptionHints StpContrast: "slider input spinbox"
 *StpStpContrast: 3 1 1 0 255 0.000 4.000 1.000
-*DefaultStpContrast: None
+*DefaultStpContrast: 700
 *StpDefaultStpContrast: None
 *StpContrast 0/0.000: ""
 *StpContrast 100/0.100: ""

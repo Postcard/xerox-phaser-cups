@@ -1,5 +1,5 @@
 # Base image
-FROM resin/%%RESIN_MACHINE_NAME%%-node:6
+FROM resin/%%RESIN_MACHINE_NAME%%-python:3.6
 
 MAINTAINER Benoit Guigal <benoit@figure.co>
 
@@ -9,12 +9,6 @@ ENV INITSYSTEM on
 ENV DBUS_SYSTEM_BUS_ADDRESS unix:path=/host/run/dbus/system_bus_socket
 
 RUN apt-get update && apt-get install -yq \
-    python \
-    python-dev \
-    python-setuptools \
-    python-pip \
-    imagemagick \
-    mlocate \
     libjpeg-dev \
     libgif-dev \
     cups \
@@ -30,17 +24,11 @@ RUN apt-get update && apt-get install -yq \
     && systemctl enable avahi-daemon
 
 
-RUN mkdir -p /usr/share/fonts/opentype
-COPY fonts/*.otf /usr/share/fonts/opentype/
-RUN fc-cache -f -v \
-    && updatedb && \
-	wget http://www.imagemagick.org/Usage/scripts/imagick_type_gen && \
-	perl imagick_type_gen > type.xml && \
-	cp type.xml /etc/ImageMagick-6/type.xml
-
-
 # create an admin user for cups
 RUN useradd -ms /bin/bash cups_admin && echo 'cups_admin:cups' | chpasswd && usermod -a -G lpadmin cups_admin
+
+COPY ./cupsd.conf /etc/cups/
+COPY ./Xerox_Phaser_7100N.ppd /usr/share/ppd/
 
 RUN mkdir -p /usr/src/app/
 WORKDIR /usr/src/app/
@@ -48,18 +36,7 @@ WORKDIR /usr/src/app/
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
-COPY package.json ./
-RUN JOBS=MAX npm install --unsafe-perm --production && npm cache clean
-
-COPY .babelrc ./
-
-COPY borne_poster_xerox ./borne_poster_xerox
-COPY wsgi.py ./wsgi.py
-
-RUN mkdir -p ./borne_poster_xerox/static/javascript/ && npm run build
-
-COPY ./cupsd.conf /etc/cups/
-#COPY ./xrx7300n.ppd /usr/share/ppd/Xerox_Phaser_7100N.ppd
+COPY xerox_phaser_cups /usr/src/app
 
 COPY start.sh ./
 RUN chmod +x start.sh
