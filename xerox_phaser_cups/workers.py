@@ -12,6 +12,7 @@ import settings
 
 logger = logging.getLogger(__name__)
 logging.getLogger('boto3').setLevel(logging.CRITICAL)
+logging.getLogger('botocore').setLevel(logging.CRITICAL)
 
 
 class StoppableThreadMixin(object):
