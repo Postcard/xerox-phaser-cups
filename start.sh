@@ -7,7 +7,7 @@ if [ "$WIFI_ON" = 1 ]; then
 
     echo "Starting wifi-connect app"
 
-    node /usr/src/wifi-connect/src/app.js --clear=false >> /data/log/wifi-connect.log 2>&1
+    node /usr/src/wifi-connect/src/app.js --clear=false
 fi
 
 echo "Installing Xerox Printer Phaser 7100D"
