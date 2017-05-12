@@ -1,5 +1,15 @@
 
 
+# Start Wifi Access Point
+if [ "$WIFI_ON" = 1 ]; then
+
+    sleep 1 # Delay needed to avoid DBUS introspection errors
+
+    echo "Starting wifi-connect app"
+
+    node /usr/src/wifi-connect/src/app.js --clear=false >> /data/log/wifi-connect.log 2>&1
+fi
+
 echo "Installing Xerox Printer Phaser 7100D"
 
 lpadmin \
