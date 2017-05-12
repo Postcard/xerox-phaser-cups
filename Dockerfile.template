@@ -8,6 +8,17 @@ ENV DEVICE_TYPE=%%RESIN_MACHINE_NAME%%
 ENV INITSYSTEM on
 ENV DBUS_SYSTEM_BUS_ADDRESS unix:path=/host/run/dbus/system_bus_socket
 
+# Install Node
+ENV NODE_VERSION 5.12.0
+
+
+RUN curl -SLO "http://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
+	&& echo "c0f459152aa87aba8a019a95899352170db0d8d52c860715c88356cb253fe2c4  node-v5.12.0-linux-x64.tar.gz" | sha256sum -c - \
+	&& tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 \
+	&& rm "node-v$NODE_VERSION-linux-x64.tar.gz" \
+	&& npm config set unsafe-perm true -g --unsafe-perm \
+	&& rm -rf /tmp/*
+
 RUN apt-get update && apt-get install -yq \
     libjpeg-dev \
     libgif-dev \
@@ -22,6 +33,15 @@ RUN apt-get update && apt-get install -yq \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && systemctl enable avahi-daemon
+
+# Install Resin wifi-connect
+RUN mkdir -p /usr/src/wifi-connect/
+COPY ./wifi-connect/package.json /usr/src/wifi-connect/
+RUN JOBS=MAX npm install --unsafe-perm --production && npm cache clean
+COPY ./wifi-connect/bower.json ./wifi-connect/.bowerrc /usr/src/wifi-connect/
+RUN ./node_modules/.bin/bower --allow-root install && ./node_modules/.bin/bower --allow-root cache clean
+COPY ./wifi-connect /usr/src/wifi-connect/
+RUN ./node_modules/.bin/coffee -c ./src
 
 
 # create an admin user for cups
