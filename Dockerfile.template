@@ -30,7 +30,6 @@ RUN apt-get update && apt-get install -yq \
 
 # Install node
 ENV NODE_VERSION 6.9.1
-ENV DBUS_SYSTEM_BUS_ADDRESS unix:path=/host/run/dbus/system_bus_socket
 
 RUN curl -SLO "http://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
     && echo "a9d9e6308931fa2a2b0cada070516d45b76d752430c31c9198933c78f8d54b17  node-v$NODE_VERSION-linux-x64.tar.gz" | sha256sum -c - \
@@ -51,9 +50,9 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     rfkill \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ENV RESIN_WIFI_CONNECT_VERSION 2.0.8
+ENV RESIN_WIFI_CONNECT_VERSION 2.0.7
 
-RUN curl -SL "https://github.com/Postcard/resin-wifi-connect/archive/v$RESIN_WIFI_CONNECT_VERSION.tar.gz" \
+RUN curl -SL "https://github.com/resin-io/resin-wifi-connect/archive/v$RESIN_WIFI_CONNECT_VERSION.tar.gz" \
     | tar xzC /usr/src/app/ \
     && mv resin-wifi-connect-$RESIN_WIFI_CONNECT_VERSION resin-wifi-connect \
     && cd resin-wifi-connect \

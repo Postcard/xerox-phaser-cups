@@ -1,8 +1,10 @@
-
+#!/bin/bash
 
 # Start Wifi Access Point if WIFI_ON
 if [ "$WIFI_ON" = 1 ]; then
     /etc/init.d/cups stop
+    export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
+    sleep 15 # Delay needed to avoid DBUS introspection errors
     node /usr/src/app/resin-wifi-connect/src/app.js --clear=false
     /etc/init.d/cups start
 fi
