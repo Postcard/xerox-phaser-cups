@@ -1,18 +1,12 @@
 
 
-# Start Wifi Access Point
+# Start Wifi Access Point if WIFI_ON
 if [ "$WIFI_ON" = 1 ]; then
-
     /etc/init.d/cups stop
-
-    sleep 1 # Delay needed to avoid DBUS introspection errors
-
-    echo "Starting wifi-connect app"
-
-    node /usr/src/wifi-connect/src/app.js --clear=false
-
+    node /usr/src/app/resin-wifi-connect/src/app.js --clear=false
     /etc/init.d/cups start
 fi
+
 
 echo "Installing Xerox Printer Phaser 7100D"
 
