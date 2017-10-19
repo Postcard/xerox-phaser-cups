@@ -3,6 +3,7 @@ import logging
 import time
 import json
 import tempfile
+import io
 
 import cups
 import boto3
@@ -11,6 +12,7 @@ import settings
 import phantomjs
 
 from renderer import render
+from utils import merge_pdf
 
 logger = logging.getLogger(__name__)
 logging.getLogger('boto3').setLevel(logging.CRITICAL)
@@ -72,11 +74,15 @@ class CUPSWorker(StoppableThreadMixin, threading.Thread):
             'place_name': place_name,
             'event_name': event_name,
             'taken_str': taken_str,
-            'css_url': 'file:///usr/src/app/xerox_phaser_cups/css/index.css'
+            'css_url': 'file://%s/css/index.css' % settings.PROJECT_PATH
         }
         html = render(context)
+        recto = phantomjs.get_screenshot(html)
+        verso_path = '%s/resources/verso.pdf' % settings.PROJECT_PATH
+        with open(verso_path) as verso_file:
+            verso = verso_file.read()
         with tempfile.NamedTemporaryFile() as f:
-            phantomjs.get_screenshot(html, f.name)
+            merge_pdf(verso, recto, f.name)
             self._print(f.name)
 
     def run(self):

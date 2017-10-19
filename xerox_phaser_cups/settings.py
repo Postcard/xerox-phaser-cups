@@ -17,6 +17,8 @@ def get_env_setting(setting, default=None):
         raise ImproperlyConfigured(error_msg)
 
 
+PROJECT_PATH = '/usr/src/app/xerox_phaser_cups'
+
 RESIN_UUID = get_env_setting('RESIN_DEVICE_UUID')
 
 PRINTER_NAME = get_env_setting('PRINTER_NAME')
