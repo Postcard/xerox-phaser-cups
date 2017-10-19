@@ -30,3 +30,5 @@ AWS_SQS_REGION = 'eu-west-1'
 AWS_ACCESS_KEY_ID = get_env_setting('AWS_ACCESS_KEY_ID')
 
 AWS_SECRET_ACCESS_KEY = get_env_setting('AWS_SECRET_ACCESS_KEY')
+
+PHANTOMJS_PATH = '/usr/local/bin/phantomjs'

@@ -1,0 +1,51 @@
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  				appearance: none;
+  	 -moz-appearance: none;
+  -webkit-appearance: none;
+  padding: 0px;
+  margin: 0px;
+}
+.poster{
+	position: relative;
+	height: 410mm;
+	width: 297mm;
+	padding: 35mm 8.5mm;
+	font-family: "Maison Mono", sans-serif;
+	font-size:12pt;
+	line-height:1.5em;
+	color:#000000;
+}
+.picture{
+	position: relative;
+}
+.picture img{
+	width: 100%;
+}
+.caption{
+	position: absolute;
+	left: 6.640625%;
+	bottom: calc(6.640625% - 0.3333333em);
+}
+.caption p{
+	color:#fff;
+	text-shadow:0px 0px 1px #000;
+	font-size: 8.91mm;
+	line-height: 1.666666em
+}
+.footer_container{
+	width: 100%;
+	position: absolute;
+	left: 8.5mm;
+	bottom: 35mm;
+}
+.footer{
+	width: 100%;
+	position: absolute;
+	left:6.640625%;
+	bottom: 0px;
+}

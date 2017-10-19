@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href={{css_url}} >
+    <meta charset="UTF-8">
+    <title>Poster A3</title>
+</head>
+<body class="poster">
+	<div class="picture">
+		<img src="{{ picture_url }}"></img>
+		<div class="caption">
+	    {% if event_name %}
+	       <p>{{ event_name }}</p>
+	    {% endif %}
+	    {% if place_name %}
+	       <p>{{ place_name }}</p>
+	    {% endif %}
+	    <p>{{ taken_str }}</p>
+		</div>
+	</div>
+	<div class="footer_container">
+		<div class="footer">
+			<p>ticket N°{{ code }}</p>
+	    <p>figure.co</p>
+		</div>
+	</div>
+</body>
+</html>

@@ -3,12 +3,14 @@ import logging
 import time
 import json
 import tempfile
-from urllib2 import urlopen
 
 import cups
 import boto3
 
 import settings
+import phantomjs
+
+from renderer import render
 
 logger = logging.getLogger(__name__)
 logging.getLogger('boto3').setLevel(logging.CRITICAL)
@@ -47,21 +49,35 @@ class CUPSWorker(StoppableThreadMixin, threading.Thread):
         sqs_resource = get_sqs_resource()
         self.queue = sqs_resource.get_queue_by_name(QueueName=queue_name)
 
-    def _print(self, url):
+    def _print(self, file_path):
         conn = cups.Connection()
         printers = conn.getPrinters()
         printer = printers.get(settings.PRINTER_NAME)
         if not printer:
             raise PrinterNotFoundException()
-        response = urlopen(url)
-        with tempfile.NamedTemporaryFile() as temp:
-            temp.write(response.read())
-            temp.flush()
-            conn.printFile(settings.PRINTER_NAME, temp.name, 'poster', {})
+        conn.printFile(settings.PRINTER_NAME, file_path, 'poster', {})
 
     def handle_print_job(self, print_job):
-        pdf_url = print_job.get('file_url')
-        self._print(pdf_url)
+        portrait = print_job['portrait']
+        picture_url = portrait['picture_1280']
+        code = portrait['code']
+        place = portrait.get('place')
+        place_name = place['name'] if place else None
+        event = portrait.get('event')
+        event_name = event['name'] if event else None
+        taken_str = portrait['taken_str']
+        context = {
+            'picture_url': picture_url,
+            'code': code,
+            'place_name': place_name,
+            'event_name': event_name,
+            'taken_str': taken_str,
+            'css_url': 'file:///usr/src/app/xerox_phaser_cups/css/index.css'
+        }
+        html = render(context)
+        with tempfile.NamedTemporaryFile() as f:
+            phantomjs.get_screenshot(html, f.name)
+            self._print(f.name)
 
     def run(self):
         while True:
