@@ -18,7 +18,7 @@ lpadmin \
     -v 'usb://Xerox/Phaser%207100N?serial=026552' \
     -P '/usr/share/ppd/Xerox_Phaser_7100N.ppd' \
     -o 'ColorModel=Gray' \
-    -o 'StpQuality=Standard' \
+    -o 'StpQuality='${QUALITY:-Standard} \
     -o 'Duplex=DuplexNoTumble' \
     -o 'StpBrightness='${BRIGHTNESS:-700} \
     -o 'StpContrast='${CONTRAST:-1100} \
