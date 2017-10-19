@@ -8,6 +8,15 @@ var outputFilePath = args[2]
 
 page.content = args[1];
 
+page.viewportSize = {
+	width:'297mm',
+	height:'420mm'
+};
+page.paperSize = {
+	width:'297mm',
+	height:'420mm'
+};
+
 page.onLoadFinished = function(){
     page.render(outputFilePath, {format: 'pdf'});
     phantom.exit();
