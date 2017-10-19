@@ -9,6 +9,7 @@ if [ "$WIFI_ON" = 1 ]; then
     /etc/init.d/cups start
 fi
 
+FOO=${BRIGHTNESS:-700}
 
 echo "Installing Xerox Printer Phaser 7100D"
 
@@ -19,8 +20,8 @@ lpadmin \
     -o 'ColorModel=Gray' \
     -o 'StpQuality=Standard' \
     -o 'Duplex=DuplexNoTumble' \
-    -o 'StpBrightness=700' \
-    -o 'StpContrast=1100' \
+    -o 'StpBrightness='${BRIGHTNESS:-700} \
+    -o 'StpContrast='${CONTRAST:-1100} \
     -o 'StpImageType=Photo' \
     -E
 
