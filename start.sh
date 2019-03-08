@@ -11,11 +11,13 @@ fi
 
 FOO=${BRIGHTNESS:-700}
 
-echo "Installing Xerox Printer Phaser 7100D"
+echo "Installing DNP DS 620"
+
+lpinfo -l -v
 
 lpadmin \
     -p 'DP_DS620' \
-    -v 'usb://dnp-ds620/DS6C89017423' \
+    -v 'gutenprint53+usb://dnp-ds620/DS6C89017423' \
     -m 'gutenprint.5.3://dnp-ds620/expert' \
     -o 'ColorModel=Gray' \
     -o 'StpQuality='${QUALITY:-Standard} \
@@ -36,5 +38,9 @@ lpadmin \
     -o 'StpContrast='${CONTRAST:-1100} \
     -o 'StpImageType=Photo' \
     -E
+
+lpoptions -p DP_DS620 -l
+echo "other printer"
+lpoptions -p Xerox_Phaser_7100N -l
 
 python -m xerox_phaser_cups
