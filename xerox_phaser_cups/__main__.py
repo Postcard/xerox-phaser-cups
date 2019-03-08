@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
     logging.info("Starting CUPS worker")
 
-    printer = figure.Printer.get(settings.RESIN_UUID)
+    printer = figure.Printer.get("06d0cd8e0faa7b4d7733be94a1723212")
     sqs_queue = printer.get('sqs_queue_name')
 
     cups_worker = CUPSWorker(sqs_queue)

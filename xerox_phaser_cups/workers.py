@@ -4,6 +4,7 @@ import time
 import json
 import tempfile
 import io
+import os
 
 import cups
 import boto3
@@ -51,6 +52,29 @@ class CUPSWorker(StoppableThreadMixin, threading.Thread):
         sqs_resource = get_sqs_resource()
         self.queue = sqs_resource.get_queue_by_name(QueueName=queue_name)
 
+    # def test_print(self, printer_name):
+    #     dirname = os.path.dirname(__file__)
+    #     file_path = os.path.join(dirname, 'imp_figure.jpg')
+    #     print(file_path)
+    #     open(file_path,"r").close()
+    #     print("closed")
+
+    #     conn = cups.Connection()
+    #     printers = conn.getPrinters()
+    #     printer = printers.get(printer_name)
+    #     if not printer:
+    #         raise PrinterNotFoundException()
+    #     conn.getPPD(printer_name)
+    #     print("printing:")
+    #     result = conn.printFile(printer_name, file_path, 'poster', {})
+    #     if result == 0:
+    #         print("error")
+    #     else:
+    #         print("job id:")
+    #         print(result)
+    #         jobs = conn.getJobs()
+    #         print(jobs)
+
     def _print(self, file_path):
         conn = cups.Connection()
         printers = conn.getPrinters()
@@ -83,6 +107,7 @@ class CUPSWorker(StoppableThreadMixin, threading.Thread):
             verso = verso_file.read()
         with tempfile.NamedTemporaryFile() as f:
             merge_pdf(verso, recto, f.name)
+            print(f.name)
             self._print(f.name)
 
     def run(self):
@@ -93,6 +118,7 @@ class CUPSWorker(StoppableThreadMixin, threading.Thread):
             else:
                 try:
                     for message in self.queue.receive_messages(MaxNumberOfMessages=10):
+                        print("PRINTING")
                         print_job = json.loads(message.body)
                         self.handle_print_job(print_job)
                         message.delete()

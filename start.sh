@@ -9,9 +9,19 @@ if [ "$WIFI_ON" = 1 ]; then
     /etc/init.d/cups start
 fi
 
-FOO=${BRIGHTNESS:-700}
+echo "Installing DP-DS620 printer locally (trying)"
 
-echo "Installing Xerox Printer Phaser 7100D"
+#lpinfo -m | grep "620"
+
+lpstat
+
+lpinfo -v
+
+lpadmin \
+    -p 'DP_DS620' \
+    -v 'usb://dnp-ds620/DS6C89017423' \
+    -m 'gutenprint.5.3://dnp-ds620/expert' \
+    -E
 
 lpadmin \
     -p 'Xerox_Phaser_7100N' \
@@ -25,4 +35,8 @@ lpadmin \
     -o 'StpImageType=Photo' \
     -E
 
+cat /var/log/cups/error_log
+
 python -m xerox_phaser_cups
+
+lpstat
