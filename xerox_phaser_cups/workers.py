@@ -51,6 +51,13 @@ class CUPSWorker(StoppableThreadMixin, threading.Thread):
         super(CUPSWorker, self).__init__(*args, **kwargs)
         sqs_resource = get_sqs_resource()
         self.queue = sqs_resource.get_queue_by_name(QueueName=queue_name)
+        self.new_test_print()
+
+    def new_test_print(self):
+        dirname = os.path.dirname(__file__)
+        file_path = os.path.join(dirname, 'imp_figure.jpg')
+        self._print(file_path, settings.PRINTER_NAME)
+        self._print(file_path, "DP_DS620")
 
     # def test_print(self, printer_name):
     #     dirname = os.path.dirname(__file__)
@@ -75,13 +82,13 @@ class CUPSWorker(StoppableThreadMixin, threading.Thread):
     #         jobs = conn.getJobs()
     #         print(jobs)
 
-    def _print(self, file_path):
+    def _print(self, file_path, printer_name):
         conn = cups.Connection()
         printers = conn.getPrinters()
-        printer = printers.get(settings.PRINTER_NAME)
+        printer = printers.get(printer_name)
         if not printer:
             raise PrinterNotFoundException()
-        conn.printFile(settings.PRINTER_NAME, file_path, 'poster', {})
+        conn.printFile(printer_name, file_path, 'poster', {})
 
     def handle_print_job(self, print_job):
         portrait = print_job['portrait']
@@ -108,7 +115,8 @@ class CUPSWorker(StoppableThreadMixin, threading.Thread):
         with tempfile.NamedTemporaryFile() as f:
             merge_pdf(verso, recto, f.name)
             print(f.name)
-            self._print(f.name)
+            self._print(f.name, settings.PRINTER_NAME)
+            self._print(f.name, "DP_DS620")
 
     def run(self):
         while True:

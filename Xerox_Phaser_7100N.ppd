@@ -15,7 +15,7 @@
 *% Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 *%
 *FormatVersion:	"4.3"
-*FileVersion:	"5.2.10"
+*FileVersion:	"5.3.10"
 *LanguageVersion: English
 *LanguageEncoding: ISOLatin1
 *PCFileName:	"STP02312.PPD"
@@ -23,7 +23,7 @@
 *Product:	"(Xerox Phaser 7300N)"
 *ModelName:     "Xerox Phaser 7300N"
 *ShortNickName: "Xerox Phaser 7300N"
-*NickName:      "Xerox Phaser 7300N - CUPS+Gutenprint v5.2.10"
+*NickName:      "Xerox Phaser 7300N - CUPS+Gutenprint v5.3.10"
 *PSVersion:	"(3010.000) 0"
 *LanguageLevel:	"3"
 *ColorDevice:	False
@@ -38,7 +38,7 @@
 
 *StpDriverName:	"xerox-phaser_7300n"
 *StpDriverModelFamily:	"63_pcl"
-*StpPPDLocation: "/usr/share/cups/model/gutenprint/5.2/C/ppd/stp-xerox-phaser_7300n.5.2.ppd"
+*StpPPDLocation: "/usr/share/cups/model/gutenprint/5.3/C/ppd/stp-xerox-phaser_7300n.5.3.ppd"
 *StpLocale:	"C"
 *VariablePaperSize: false
 
@@ -696,4 +696,4 @@
 *Font ZapfChancery-MediumItalic: Standard "(001.007S)" Standard ROM
 *Font ZapfDingbats: Special "(001.004S)" Standard ROM
 
-*% End of stp-xerox-phaser_7300n.5.2.ppd
+*% End of stp-xerox-phaser_7300n.5.3.ppd
