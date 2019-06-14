@@ -34,3 +34,5 @@ AWS_ACCESS_KEY_ID = get_env_setting('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = get_env_setting('AWS_SECRET_ACCESS_KEY')
 
 PHANTOMJS_PATH = '/usr/local/bin/phantomjs'
+
+IMAGE_TO_PRINT = ("picture_color_1280", "picture_1280")[get_env_setting('COLOR_OR_BW') == "BW"]

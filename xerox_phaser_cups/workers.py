@@ -61,7 +61,7 @@ class CUPSWorker(StoppableThreadMixin, threading.Thread):
 
     def handle_print_job(self, print_job):
         portrait = print_job['portrait']
-        picture_url = portrait['picture_1280']
+        picture_url = portrait[settings.IMAGE_TO_PRINT]
         code = portrait['code']
         place = portrait.get('place')
         place_name = place['name'] if place else None
