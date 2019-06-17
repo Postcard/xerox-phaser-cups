@@ -10,6 +10,9 @@ ENV INITSYSTEM on
 RUN mkdir -p /usr/src/app/
 WORKDIR /usr/src/app/
 
+# update new sources because docker image is outdates, see https://superuser.com/a/1423685
+RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
+
 RUN apt-get update && apt-get install -yq \
     libjpeg-dev \
     libgif-dev \
