@@ -1,9 +1,9 @@
 # Base image
-FROM resin/%%RESIN_MACHINE_NAME%%-python:2.7
+FROM balenalib/%%BALENA_MACHINE_NAME%%-python:2.7
 
 MAINTAINER Benoit Guigal <benoit@figure.co>
 
-ENV DEVICE_TYPE=%%RESIN_MACHINE_NAME%%
+ENV DEVICE_TYPE=%%BALENA_MACHINE_NAME%%
 
 ENV INITSYSTEM on
 
@@ -13,7 +13,15 @@ WORKDIR /usr/src/app/
 # update new sources because docker image is outdates, see https://superuser.com/a/1423685
 RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
 
-RUN apt-get update && apt-get install -yq \
+RUN install_packages  xserver-xorg=1:7.7+19 \
+    xserver-xorg-input-evdev \
+    xinit \
+    xfce4 \
+    xfce4-terminal \
+    x11-xserver-utils \
+    dbus-x11 \
+    matchbox-keyboard \
+    xterm \
     libjpeg-dev \
     libgif-dev \
     cups \
@@ -30,6 +38,21 @@ RUN apt-get update && apt-get install -yq \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && systemctl enable avahi-daemon
+
+# -- Start of XORG section -- #
+# CODE FROM https://github.com/balena-io-playground/x11-window-manager/blob/master/Dockerfile.template
+
+# Disable screen from turning it off
+RUN echo "#!/bin/bash" > /etc/X11/xinit/xserverrc \
+  && echo "" >> /etc/X11/xinit/xserverrc \
+  && echo 'exec /usr/bin/X -s 0 dpms' >> /etc/X11/xinit/xserverrc 
+
+ENV UDEV=1
+
+# Avoid requesting XFCE4 question on X start
+ENV XFCE_PANEL_MIGRATE_DEFAULT=1
+
+# -- End of XORG section -- #
 
 # -- Start PhantomJS section -- #
 
@@ -71,7 +94,7 @@ RUN curl -SLO "http://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x
     && rm -rf /tmp/*
 
 # Set the device type environment variable using Dockerfile templates
-ENV DEVICE_TYPE=%%RESIN_MACHINE_NAME%%
+ENV DEVICE_TYPE=%%BALENA_MACHINE_NAME%%
 
 RUN apt-get update && apt-get install -yq --no-install-recommends \
     dnsmasq \
