@@ -31,9 +31,11 @@ class GracefulKiller:
 if __name__ == '__main__':
 
     logging.info("Starting CUPS worker")
-
+    
     printer = figure.Printer.get(settings.RESIN_UUID)
     sqs_queue = printer.get('sqs_queue_name')
+    
+    logging.info(sqs_queue)
 
     cups_worker = CUPSWorker(sqs_queue)
 
