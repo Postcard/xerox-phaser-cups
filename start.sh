@@ -25,7 +25,7 @@ echo "STARTING X"
 startx /usr/src/app/firefox/firefox --width $WINDOW_WIDTH --height $WINDOW_HEIGHT --kiosk https://figure.co/print -- -nocursor 2> /dev/null &
 
 # #disable screen saving
-until [ xset -display :0 -dpms ]; do
+until xset -display :0 -dpms; do
   echo "Waiting 2seconds before retrying to disable screen saving";
   sleep 2;
 done;
