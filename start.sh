@@ -25,8 +25,9 @@ echo "STARTING X"
 startx /usr/src/app/firefox/firefox --width $WINDOW_WIDTH --height $WINDOW_HEIGHT --kiosk https://figure.co/print -- -nocursor 2> /dev/null &
 
 # #disable screen saving
-# sleep 5
-xset -display :0 -dpms
+until xset -display :0 -dpms;
+  sleep 2;
+done;
 
 # END OF XORG SECTION
 
