@@ -12,13 +12,9 @@ if [[ ! -z "$ROTATE_DISPLAY" ]]; then
   (sleep 3 && DISPLAY=:0 xrandr -o $ROTATE_DISPLAY) & 
 fi
 
-# start desktop manager
+# start firefox
 echo "STARTING X"
 startx /usr/src/app/firefox/firefox --width $WINDOW_WIDTH --height $WINDOW_HEIGHT --kiosk https://figure.co/print -- -nocursor
-
-# uncomment to start x without mouse cursor
-# startx -- -nocursor
-
 # END OF XORG SECTION
 
 # Start Wifi Access Point if WIFI_ON
