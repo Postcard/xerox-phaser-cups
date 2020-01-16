@@ -22,7 +22,7 @@ fi
 
 # start firefox
 echo "STARTING X"
-startx /usr/src/app/firefox/firefox --width $WINDOW_WIDTH --height $WINDOW_HEIGHT --kiosk https://figure.co/print -- -nocursor
+startx /usr/src/app/firefox/firefox --width $WINDOW_WIDTH --height $WINDOW_HEIGHT --kiosk https://figure.co/print -- -nocursor 2> /dev/null &
 
 # #disable screen saving
 # sleep 5
