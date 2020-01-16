@@ -26,7 +26,7 @@ startx /usr/src/app/firefox/firefox --width $WINDOW_WIDTH --height $WINDOW_HEIGH
 
 # #disable screen saving
 # sleep 5
-# xset -display :0 -dpms
+xset -display :0 -dpms
 
 # END OF XORG SECTION
 

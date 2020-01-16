@@ -51,9 +51,6 @@ RUN curl --output firefox-72.0.1.tar.bz2 https://download-installer.cdn.mozilla.
 # -- Start of XORG section -- #
 # CODE FROM https://github.com/balena-io-playground/x11-window-manager/blob/master/Dockerfile.template
 
-# Disable screen from turning it off
-RUN echo 'xset -display :0 -dpms' >> /etc/X11/xinit/xserverrc 
-
 ENV UDEV=1
 
 # Avoid requesting XFCE4 question on X start
