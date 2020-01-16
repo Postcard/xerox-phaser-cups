@@ -14,7 +14,7 @@ fi
 
 # start desktop manager
 echo "STARTING X"
-# startx /usr/src/app/firefox/firefox --kiosk https://figure.co/print
+startx /usr/src/app/firefox/firefox --width $WINDOW_WIDTH --height $WINDOW_HEIGHT --kiosk https://figure.co/print -- -nocursor
 
 # uncomment to start x without mouse cursor
 # startx -- -nocursor
