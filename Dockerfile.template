@@ -24,7 +24,6 @@ RUN apt-get update && apt-get install -yq \
     x11-xserver-utils \
     dbus-x11 \
     matchbox-keyboard \
-    xterm \
     libjpeg-dev \
     libgif-dev \
     cups \
@@ -38,10 +37,13 @@ RUN apt-get update && apt-get install -yq \
     libdbus-1-dev \
     imagemagick \
     mlocate \
-    firefox-esr \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && systemctl enable avahi-daemon
+
+# Installing firefox LTS
+RUN curl --output firefox-72.0.1.tar.bz2 https://download-installer.cdn.mozilla.net/pub/firefox/releases/72.0.1/linux-x86_64/en-US/firefox-72.0.1.tar.bz2 && \
+    tar xjf firefox-72.0.1.tar.bz2
 
 # -- Start of XORG section -- #
 # CODE FROM https://github.com/balena-io-playground/x11-window-manager/blob/master/Dockerfile.template
