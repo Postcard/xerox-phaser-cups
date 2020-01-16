@@ -6,9 +6,6 @@
 export DISPLAY=:0.0
 export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 
-#disable screen saving
-xset -dpms
-
 # rotate screen if env variable is set [normal, inverted, left or right]
 if [[ ! -z "$ROTATE_DISPLAY" ]]; then
   echo "YES"
@@ -18,6 +15,10 @@ fi
 # start firefox
 echo "STARTING X"
 startx /usr/src/app/firefox/firefox --width $WINDOW_WIDTH --height $WINDOW_HEIGHT --kiosk https://figure.co/print -- -nocursor
+
+#disable screen saving
+xset -display :0 -dpms
+
 # END OF XORG SECTION
 
 # Start Wifi Access Point if WIFI_ON
