@@ -14,7 +14,7 @@ fi
 
 # start desktop manager
 echo "STARTING X"
-startx firefox
+startx firefox --headless https://figure.co/print
 
 # uncomment to start x without mouse cursor
 # startx -- -nocursor
