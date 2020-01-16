@@ -14,13 +14,10 @@ fi
 
 # start desktop manager
 echo "STARTING X"
-startx /usr/src/app/firefox/firefox --kiosk https://figure.co/print
+# startx /usr/src/app/firefox/firefox --kiosk https://figure.co/print
 
 # uncomment to start x without mouse cursor
 # startx -- -nocursor
-
-# uncomment to open an application instead of the desktop
-# startx xterm  
 
 # END OF XORG SECTION
 
