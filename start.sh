@@ -6,6 +6,9 @@
 export DISPLAY=:0.0
 export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 
+#disable screen saving
+xset -dpms
+
 # rotate screen if env variable is set [normal, inverted, left or right]
 if [[ ! -z "$ROTATE_DISPLAY" ]]; then
   echo "YES"
