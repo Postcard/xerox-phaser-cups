@@ -4,3 +4,7 @@ figure-sdk==0.2.4
 pycups==1.9.73
 pypdf2==1.26.0
 
+#For connect_to_website.py
+pynput==1.6.5
+python-xlib==0.26
+six==1.14.0

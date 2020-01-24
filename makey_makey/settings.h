@@ -21,8 +21,8 @@ int keyCodes[NUM_INPUTS] = {
   KEY_DOWN_ARROW,    // down arrow pad
   KEY_LEFT_ARROW,    // left arrow pad
   KEY_RIGHT_ARROW,   // right arrow pad
-  KEY_RETURN,               // space button pad
-  MOUSE_LEFT,        // click button pad
+  KEY_F8,               // space button pad
+  KEY_F9,        // click button pad
   
   // female header on the back left side
   

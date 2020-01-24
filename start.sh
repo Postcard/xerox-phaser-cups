@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export DISPLAY=:1
+export DISPLAY=:0
 export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 
 # Start Wifi Access Point if WIFI_ON
@@ -22,12 +22,11 @@ fi
 
 # start firefox
 echo "STARTING X"
-# 2> /dev/null
-startx /usr/src/app/firefox/firefox --width $WINDOW_WIDTH --height $WINDOW_HEIGHT --kiosk https://figure.co/print -- -nocursor &
+startx /usr/src/app/firefox/firefox --width $WINDOW_WIDTH --height $WINDOW_HEIGHT --kiosk https://integration.figure.co/print 2> /dev/null -- -nocursor &
 
-# #disable screen saving
-until xset -dpms && xset s off && xset s noblank; do
-  echo "Waiting 2seconds before retrying to disable screen saving";
+#All the commands which need the x server to works before we can execute them
+until xset -dpms && xset s off && xset s noblank && setxkbmap fr && python connect_to_website.py; do
+  echo "Waiting 2seconds more before x works";
   sleep 2;
 done;
 
